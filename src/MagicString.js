@@ -132,6 +132,7 @@ export default class MagicString {
 
 	generateDecodedMap(options) {
 		options = options || {};
+		options.hires = false; // Force disable hires to reduce memory usage
 
 		const sourceIndex = 0;
 		const names = Object.keys(this.storedNames);
