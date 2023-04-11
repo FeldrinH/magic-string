@@ -34,6 +34,7 @@ export default class MagicString {
 			sourcemapLocations: { writable: true, value: new BitSet() },
 			storedNames: { writable: true, value: {} },
 			indentStr: { writable: true, value: undefined },
+			ignoreList: { writable: true, value: options.ignoreList },
 		});
 
 		if (DEBUG) {
@@ -164,11 +165,12 @@ export default class MagicString {
 		});
 
 		return {
-			file: options.file ? options.file.split(/[/\\]/).pop() : null,
-			sources: [options.source ? getRelativePath(options.file || '', options.source) : null],
-			sourcesContent: options.includeContent ? [this.original] : [null],
+			file: options.file ? options.file.split(/[/\\]/).pop() : undefined,
+			sources: [options.source ? getRelativePath(options.file || '', options.source) : (options.file || '')],
+			sourcesContent: options.includeContent ? [this.original] : undefined,
 			names,
 			mappings: mappings.raw,
+			x_google_ignoreList: this.ignoreList ? [sourceIndex] : undefined
 		};
 	}
 
